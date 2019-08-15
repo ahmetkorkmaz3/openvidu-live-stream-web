@@ -22,6 +22,7 @@ function joinSession() {
         document.getElementById("subscriber").style.display = "none";
         document.getElementById("publisher").style.display = "block";
         document.getElementById("chat").style.display = "block";
+        document.getElementById("chat-send").style.display = "block";
         user = {
           name: document.getElementById("username").value,
           avatar: "resim.jpg"
@@ -56,6 +57,7 @@ function joinSessionSubscriber() {
       document.getElementById("session").style.display = "block";
       document.getElementById("publisher").style.display = "none";
       document.getElementById("chat").style.display = "block";
+      document.getElementById("chat-send").style.display = "block";
       user = {
         name: document.getElementById("username").value,
         avatar: "resim2.jpg"
