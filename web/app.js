@@ -2,6 +2,14 @@ var OV;
 var session;
 var user;
 
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
 function joinSession() {
 
 	var mySessionId = document.getElementById("sessionId").value;
@@ -62,6 +70,9 @@ function joinSessionSubscriber() {
         name: document.getElementById("username").value,
         avatar: "resim2.jpg"
       };
+      var size = Object.size(session.connection.session.remoteConnections);
+
+      $('#subscribers').html("Katılımcı Sayısı: " + size);
     })
     .catch(error => {
       console.log("error");
