@@ -36,7 +36,10 @@ function joinSession() {
           avatar: "resim.jpg"
         };
 				var publisher = OV.initPublisher("publisher");
-				session.publish(publisher);
+        session.publish(publisher);
+        var size = Object.size(session.connection.session.remoteConnections);
+
+        $('#subscribers').html('<i class="fa fa-users"></i> ' + size);
 			})
 			.catch(error => {
 				console.log("There was an error connecting to the session:", error.code, error.message);
@@ -45,6 +48,8 @@ function joinSession() {
   
   session.on('signal:my-chat', (event) => {
     $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
+    var elem = document.getElementById('chat');
+    elem.scrollTop = elem.scrollHeight;
   });
 }
 
@@ -72,14 +77,16 @@ function joinSessionSubscriber() {
       };
       var size = Object.size(session.connection.session.remoteConnections);
 
-      $('#subscribers').html("Katılımcı Sayısı: " + size);
+      $('#subscribers').html('<i class="fa fa-users"></i> ' + size);
     })
     .catch(error => {
       console.log("error");
     });
   });
   session.on('signal:my-chat', (event) => {
-    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div><span class='other'>" + JSON.parse(event.data).username + "</span></div>");
+    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
+    var elem = document.getElementById('chat');
+    elem.scrollTop = elem.scrollHeight;
   });
   // $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
 
@@ -98,10 +105,6 @@ function sendMessage() {
     type: 'my-chat'             // The type of message (optional)
   })
   .then(() => {
-    window.setInterval(function() {
-      var elem = document.getElementById('chat');
-      elem.scrollTop = elem.scrollHeight;
-    }, 500);
     console.log('Message successfully sent');
   })
   .catch(error => {
