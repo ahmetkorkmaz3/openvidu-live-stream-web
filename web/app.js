@@ -44,7 +44,7 @@ function joinSession() {
   });
   
   session.on('signal:my-chat', (event) => {
-    $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
+    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
   });
 }
 
@@ -79,8 +79,10 @@ function joinSessionSubscriber() {
     });
   });
   session.on('signal:my-chat', (event) => {
-    $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
+    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div><span class='other'>" + JSON.parse(event.data).username + "</span></div>");
   });
+  // $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
+
 }
 
 function sendMessage() {
@@ -96,6 +98,10 @@ function sendMessage() {
     type: 'my-chat'             // The type of message (optional)
   })
   .then(() => {
+    window.setInterval(function() {
+      var elem = document.getElementById('chat');
+      elem.scrollTop = elem.scrollHeight;
+    }, 500);
     console.log('Message successfully sent');
   })
   .catch(error => {
@@ -126,7 +132,7 @@ window.onbeforeunload = function () {
  *   3) The token must be consumed in Session.connect() method
  */
 
-var OPENVIDU_SERVER_URL = "https://stream.guvercinsepetim.com:4443";
+var OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 var OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function getToken(mySessionId) {

@@ -1,54 +1,68 @@
 <html>
 
 <head>
-	<title>openvidu-hello-world</title>
-	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<link rel="styleSheet" href="assets/css/style.css" type="text/css" media="screen">
-	<script src="openvidu-browser-2.11.0.js"></script>
-	<script src="app.js"></script>
+  <title>openvidu-hello-world</title>
+  <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="styleSheet" href="assets/css/style.css" type="text/css" media="screen">
+  <script src="openvidu-browser-2.11.0.js"></script>
+  <script src="app.js"></script>
 </head>
 
 <body>
-	<div id="join">
-		<h1>Join a video session</h1>
-		<form onsubmit="joinSession(); return false">
-			<p>
-				<label>Session:</label>
+  <div id="join">
+    <h1>Join a video session</h1>
+    <form onsubmit="joinSession(); return false">
+      <p>
+        <label>Session:</label>
         <input type="text" id="sessionId" value="SessionA" required>
-				<label>Username:</label>
-        <input type="text" id="username" required>        
-			</p>
-			<p>
-				<input type="submit" value="JOIN">
-			</p>
+        <label>Username:</label>
+        <input type="text" id="username" required>
+      </p>
+      <p>
+        <input type="submit" value="JOIN">
+      </p>
     </form>
     <form onsubmit="joinSessionSubscriber(); return false">
-			<p>
-				<input type="submit" value="JOIN">
-			</p></form>
-  </div>
-
-	<div id="session" style="display: none;">
-		<h1 id="session-header"></h1>
-		<div>
-			<div id="publisher"></div>
-			<div id="subscriber"></div>
-		</div>
-  </div>
-
-  <div id="chat" style="display: none;">
-  </div>
-  <div id="chat-send" style="display: none;">
-    <form onsubmit="sendMessage(); return false">
-      <input type="text" id="message" name="message" id="message">
-      <input type="submit" value="Gönder">
+      <p>
+        <input type="submit" value="JOIN">
+      </p>
     </form>
   </div>
+
+  <div id="session" style="display: none;">
+    <h1 id="session-header"></h1>
+    <div id="video">
+      <div id="publisher"></div>
+      <div id="subscriber"></div>
+      <div id="chat-component" class="chat">
+        <div id="chat" class="messages" style="display: none;">
+        </div>
+        <div id="chat-send" style="display: none;">
+          <form class="ml-1 form-group row h-50" onsubmit="sendMessage(); return false">
+            <input type="text" class="form-control send-message-input col-md-8" id="message" name="message" id="message">
+            <input type="submit" class="form-control col-md-3 offset-md-1" value="Gönder">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div id="subscribers">
     Katılımcı Sayısı:
   </div>
+
+  <script>
+    /*
+    var objDiv = document.getElementById(".messages");
+    objDiv.scrollTop = objDiv.scrollHeight;*/
+
+
+  </script>
 
 </body>
 

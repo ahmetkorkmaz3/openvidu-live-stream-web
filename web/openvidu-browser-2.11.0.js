@@ -3558,7 +3558,7 @@ var OpenVidu = (function () {
                 mirror: (typeof properties.mirror !== 'undefined') ? properties.mirror : true,
                 publishAudio: (typeof properties.publishAudio !== 'undefined') ? properties.publishAudio : true,
                 publishVideo: (typeof properties.publishVideo !== 'undefined') ? properties.publishVideo : true,
-                resolution: (typeof MediaStreamTrack !== 'undefined' && properties.videoSource instanceof MediaStreamTrack) ? undefined : ((typeof properties.resolution !== 'undefined') ? properties.resolution : '640x480'),
+                resolution: (typeof MediaStreamTrack !== 'undefined' && properties.videoSource instanceof MediaStreamTrack) ? undefined : ((typeof properties.resolution !== 'undefined') ? properties.resolution : '480x640'),
                 videoSource: (typeof properties.videoSource !== 'undefined') ? properties.videoSource : undefined,
                 filter: properties.filter
             };
@@ -3569,7 +3569,7 @@ var OpenVidu = (function () {
                 mirror: true,
                 publishAudio: true,
                 publishVideo: true,
-                resolution: '640x480'
+                resolution: '480x640'
             };
         }
         var publisher = new Publisher_1.Publisher(targetElement, properties, this);
@@ -3804,10 +3804,10 @@ var OpenVidu = (function () {
             else {
                 video = {
                     height: {
-                        ideal: 480
+                        ideal: 640
                     },
                     width: {
-                        ideal: 640
+                        ideal: 480
                     }
                 };
             }
