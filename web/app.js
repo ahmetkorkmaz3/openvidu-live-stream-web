@@ -78,6 +78,7 @@ function joinSessionSubscriber() {
       var size = Object.size(session.connection.session.remoteConnections);
 
       $('#subscribers').html('<i class="fa fa-users"></i> ' + size);
+      $('#chat').append("<div class='bubbleWrapper'><div class='inlineContainer'><div class='otherBubble other'><b> " + user.name + "</b> kullanıcısı yayına katıldı.</div></div></div>")
     })
     .catch(error => {
       console.log("error");
