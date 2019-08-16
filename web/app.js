@@ -89,6 +89,7 @@ function sendMessage() {
     username: user.name,
     userAvatar: user.avatar
   };
+  $('#message').val("");
   session.signal({
     data: JSON.stringify(messageData),  // Any string (optional)
     to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -125,7 +126,7 @@ window.onbeforeunload = function () {
  *   3) The token must be consumed in Session.connect() method
  */
 
-var OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+var OPENVIDU_SERVER_URL = "https://stream.guvercinsepetim.com:4443";
 var OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function getToken(mySessionId) {
