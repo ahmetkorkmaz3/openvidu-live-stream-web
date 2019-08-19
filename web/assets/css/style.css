@@ -12,7 +12,9 @@ html {
 body {
   display: table-cell;
 	vertical-align: middle;
-	text-align: center;
+  text-align: center;
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
 }
 
 #video {
@@ -109,4 +111,8 @@ body {
 #subscribers i {
   color: red;
   font-size: 20px;
+}
+
+#publisher video {
+  border-radius: 10px;
 }
