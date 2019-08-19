@@ -80,7 +80,7 @@ function joinSessionSubscriber() {
       };
 
       var messageData = {
-        message: user.name + " kullanıcısı yayına katıldı.",
+        message: "<b>" + user.name + "</b> kullanıcısı yayına katıldı.",
         userAvatar: user.avatar
       };
       session.signal({
