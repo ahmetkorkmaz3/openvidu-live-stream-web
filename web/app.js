@@ -30,7 +30,7 @@ function joinSession() {
         document.getElementById("subscriber").style.display = "none";
         document.getElementById("publisher").style.display = "block";
         document.getElementById("chat").style.display = "block";
-        document.getElementById("chat-send").style.display = "block";
+        /*document.getElementById("chat-send").style.display = "block";*/
         user = {
           name: document.getElementById("username").value,
           avatar: "resim.jpg"
@@ -50,6 +50,9 @@ function joinSession() {
     $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
     var elem = document.getElementById('chat');
     elem.scrollTop = elem.scrollHeight;
+  });
+  session.on('signal:subs', (event) => {
+    $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
   });
 }
 
@@ -75,10 +78,35 @@ function joinSessionSubscriber() {
         name: document.getElementById("username").value,
         avatar: "resim2.jpg"
       };
-      var size = Object.size(session.connection.session.remoteConnections);
 
-      $('#subscribers').html('<i class="fa fa-users"></i> ' + size);
-      $('#chat').append("<div class='bubbleWrapper'><div class='inlineContainer'><div class='otherBubble other'><b> " + user.name + "</b> kullanıcısı yayına katıldı.</div></div></div>")
+      var messageData = {
+        message: user.name + " kullanıcısı yayına katıldı.",
+        userAvatar: user.avatar
+      };
+      session.signal({
+        data: JSON.stringify(messageData),
+        to: [],
+        type: 'my-chat'
+      })
+      .then(() => {
+        console.log('yayına katıldınız.');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      
+      session.signal({
+        data: Object.size(session.connection.session.remoteConnections),
+        to: [],
+        type: 'subs'
+      })
+      .then(() => {
+        console.log('yeni izleyici');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      // $('#chat').append("<div class='bubbleWrapper'><div class='inlineContainer'><div class='otherBubble other'><b> " + user.name + "</b> kullanıcısı yayına katıldı.</div></div></div>")
     })
     .catch(error => {
       console.log("error");
@@ -89,8 +117,12 @@ function joinSessionSubscriber() {
     var elem = document.getElementById('chat');
     elem.scrollTop = elem.scrollHeight;
   });
+  
+  session.on('signal:subs', (event) => {
+    $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
+  });
+  
   // $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
-
 }
 
 function sendMessage() {
