@@ -106,7 +106,6 @@ function joinSessionSubscriber() {
       .catch(error => {
         console.log(error);
       });
-      // $('#chat').append("<div class='bubbleWrapper'><div class='inlineContainer'><div class='otherBubble other'><b> " + user.name + "</b> kullanıcısı yayına katıldı.</div></div></div>")
     })
     .catch(error => {
       console.log("error");
@@ -121,8 +120,6 @@ function joinSessionSubscriber() {
   session.on('signal:subs', (event) => {
     $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
   });
-  
-  // $('#chat').append('<p> <img src="./assets/img/' + JSON.parse(event.data).userAvatar + '" style="width: 50px;height: 50px; border-radius:50%;"> <span style="font-size: 20px; margin-right: 6px;">' + JSON.parse(event.data).username + '</span>' + '<span>' + JSON.parse(event.data).message +  '</span> </p>');
 }
 
 function sendMessage() {
@@ -168,8 +165,8 @@ window.onbeforeunload = function () {
  *   3) The token must be consumed in Session.connect() method
  */
 
-var OPENVIDU_SERVER_URL = "https://134.209.168.81:4443";
-var OPENVIDU_SERVER_SECRET = "YOUR_SECRET";
+var OPENVIDU_SERVER_URL = "https://167.71.243.138:4443";
+var OPENVIDU_SERVER_SECRET = "maxithings";
 
 function getToken(mySessionId) {
 	return createSession(mySessionId).then(sessionId => createToken(sessionId));
