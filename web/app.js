@@ -177,7 +177,7 @@ window.onbeforeunload = function () {
  *   3) The token must be consumed in Session.connect() method
  */
 
-var OPENVIDU_SERVER_URL = "https://167.71.243.138:4443";
+var OPENVIDU_SERVER_URL = "https://167.71.240.125:4443";
 var OPENVIDU_SERVER_SECRET = "maxithings";
 
 function getToken(mySessionId) {
