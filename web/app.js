@@ -120,6 +120,18 @@ function joinSessionSubscriber() {
   session.on('signal:subs', (event) => {
     $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
   });
+
+  session.on('signal:exit', (event) => {
+      Swal.fire({
+        type: 'error',
+        title: 'Yayın bitti',
+        text: event.data + ' yayını bitirdi!',
+        button: 'Tamam'
+      })
+      .then(function() {
+        window.location.replace("https://guvercinsepetim.com");
+      });
+  });
 }
 
 function sendMessage() {
