@@ -2,6 +2,7 @@ var OV;
 var session;
 var user;
 
+/* İzleyici sayısı */
 Object.size = function(obj) {
   var size = 0, key;
   for (key in obj) {
@@ -9,7 +10,9 @@ Object.size = function(obj) {
   }
   return size;
 };
+/* İzleyici sayısı bitiş */
 
+/* Publisher */
 function joinSession() {
 
 	var mySessionId = document.getElementById("sessionId").value;
@@ -30,32 +33,35 @@ function joinSession() {
         document.getElementById("subscriber").style.display = "none";
         document.getElementById("publisher").style.display = "block";
         document.getElementById("chat").style.display = "block";
-        /*document.getElementById("chat-send").style.display = "block";*/
         user = {
           name: document.getElementById("username").value,
           avatar: "resim.jpg"
         };
 				var publisher = OV.initPublisher("publisher");
         session.publish(publisher);
-        var size = Object.size(session.connection.session.remoteConnections);
 
-        $('#subscribers').html('<i class="fa fa-users"></i> ' + size);
+
 			})
 			.catch(error => {
 				console.log("There was an error connecting to the session:", error.code, error.message);
 			});
   });
   
+  /* Chat için sinyal takibini yapıyor. */
   session.on('signal:my-chat', (event) => {
     $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
     var elem = document.getElementById('chat');
     elem.scrollTop = elem.scrollHeight;
   });
+
+  /* İzleyici sayısı için sinyal takibi yapıyor. */
   session.on('signal:subs', (event) => {
     $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
   });
 }
+/* Publisher bitiş */
 
+/* İzleyici */
 function joinSessionSubscriber() {
   var mySessionId = document.getElementById("sessionId").value;
   
@@ -78,9 +84,9 @@ function joinSessionSubscriber() {
         name: document.getElementById("username").value,
         avatar: "resim2.jpg"
       };
-
+      /* İzleyici katıldı bilgisi sinyali */
       var messageData = {
-        message: "<b>" + user.name + "</b> kullanıcısı yayına katıldı.",
+        message: user.name + " kullanıcısı yayına katıldı.",
         userAvatar: user.avatar
       };
       session.signal({
@@ -94,7 +100,9 @@ function joinSessionSubscriber() {
       .catch(error => {
         console.log(error);
       });
+      /* Bitiş */
       
+      /* İzleyici sayısı için sinyal */
       session.signal({
         data: Object.size(session.connection.session.remoteConnections),
         to: [],
@@ -106,6 +114,7 @@ function joinSessionSubscriber() {
       .catch(error => {
         console.log(error);
       });
+      /* Bitiş */
     })
     .catch(error => {
       console.log("error");
@@ -121,6 +130,7 @@ function joinSessionSubscriber() {
     $('#subscribers').html('<i class="fa fa-users"></i> ' + event.data);
   });
 
+  /* Publisher Çıkış yapınca sinyal  */
   session.on('signal:exit', (event) => {
       Swal.fire({
         type: 'error',
@@ -132,7 +142,9 @@ function joinSessionSubscriber() {
         window.location.replace("https://guvercinsepetim.com");
       });
   });
+  /* Bitiş */
 }
+/* İzleyici Bitiş */
 
 function sendMessage() {
   var messageData = {
