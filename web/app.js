@@ -49,7 +49,7 @@ function joinSession() {
   
   /* Chat için sinyal takibini yapıyor. */
   session.on('signal:my-chat', (event) => {
-    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
+    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).avatar + "'><div class='otherBubble other'><b>" + JSON.parse(event.data).username + "</b> " + JSON.parse(event.data).message + "</div></div></div>");
     var elem = document.getElementById('chat');
     elem.scrollTop = elem.scrollHeight;
   });
@@ -86,8 +86,9 @@ function joinSessionSubscriber() {
       };
       /* İzleyici katıldı bilgisi sinyali */
       var messageData = {
-        message: user.name + " kullanıcısı yayına katıldı.",
-        userAvatar: user.avatar
+        username: user.name,
+        message: " Kullanıcısı yayına katıldı.",
+        avatar: user.avatar
       };
       session.signal({
         data: JSON.stringify(messageData),
@@ -121,7 +122,8 @@ function joinSessionSubscriber() {
     });
   });
   session.on('signal:my-chat', (event) => {
-    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).userAvatar + "'><div class='otherBubble other'> " + JSON.parse(event.data).message + "</div></div></div>");
+    console.log("avatar: " + event.data.avatar);
+    $('#chat').append("<div class='bubbleWrapper'> <div class='inlineContainer'><img class='inlineIcon' src='./assets/img/" + JSON.parse(event.data).avatar + "'><div class='otherBubble other'><b>" + JSON.parse(event.data).username + "</b> " + JSON.parse(event.data).message + "</div></div></div>");
     var elem = document.getElementById('chat');
     elem.scrollTop = elem.scrollHeight;
   });
@@ -150,7 +152,7 @@ function sendMessage() {
   var messageData = {
     message: $('#message').val(),
     username: user.name,
-    userAvatar: user.avatar
+    avatar: user.avatar
   };
   $('#message').val("");
   session.signal({
